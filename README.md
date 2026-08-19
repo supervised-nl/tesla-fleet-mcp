@@ -1,6 +1,6 @@
 # tesla-fleet-mcp
 
-Minimal **stdio MCP** for Tesla [Fleet API](https://developer.tesla.com/docs/fleet-api). TypeScript. Same shape as a thin Graph/Outlook MCP: one process, env-based secrets, no extra daemons for read/wake.
+Minimal **stdio MCP** for Tesla [Fleet API](https://developer.tesla.com/docs/fleet-api). TypeScript. One process, env-based secrets, no extra daemons for read/wake.
 
 Commands (climate, charge, lock) need Tesla’s official [`tesla-http-proxy`](https://github.com/teslamotors/vehicle-command) plus a virtual key on the car. That proxy is **not** bundled here.
 
