@@ -3,7 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { vinOrDefault } from "./config.ts";
 import { fleet } from "./fleet.ts";
-import { qs } from "./util.ts";
+import { endpointsQuery } from "./util.ts";
 
 function text(data: unknown) {
   return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
@@ -31,19 +31,18 @@ server.tool("vehicle_get", "Cheap vehicle status (state: online/asleep/offline).
 
 server.tool(
   "vehicle_data",
-  "Live vehicle_data. Expensive — only when needed. Default charge+climate+vehicle_state. Add location_data for GPS.",
+  "Live vehicle_data. Expensive — only when needed. Default is the full payload. Optional endpoints: comma or semicolon list (Tesla wants ; ). Add location_data for GPS.",
   {
     vin: z.string().optional(),
     endpoints: z.string().optional(),
   },
   async ({ vin, endpoints }) =>
-    run(() => {
-      const ep = endpoints || "charge_state,climate_state,vehicle_state";
-      return fleet(
+    run(() =>
+      fleet(
         "GET",
-        `/api/1/vehicles/${encodeURIComponent(vinOrDefault(vin))}/vehicle_data${qs({ endpoints: ep })}`,
-      );
-    }),
+        `/api/1/vehicles/${encodeURIComponent(vinOrDefault(vin))}/vehicle_data${endpointsQuery(endpoints)}`,
+      ),
+    ),
 );
 
 server.tool("nearby_chargers", "Charging sites near the vehicle.", vinArg, async ({ vin }) =>

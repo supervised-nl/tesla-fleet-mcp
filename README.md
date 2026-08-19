@@ -12,7 +12,7 @@ Hermes server name: `tesla-fleet`. Tools appear as `mcp__tesla_fleet__*`.
 |---|---|
 | `vehicles_list` | Account vehicles |
 | `vehicle_get` | Cheap state (`online` / `asleep` / `offline`) |
-| `vehicle_data` | Live data. Billable. Default `charge_state,climate_state,vehicle_state`. Pass `endpoints` for more (e.g. `location_data`) |
+| `vehicle_data` | Live data. Billable. Default = full payload (no `endpoints` filter). Optional `endpoints` list; Tesla wants `;` (commas are accepted by this MCP and rewritten). `location_data` for GPS |
 | `nearby_chargers` | Nearby charge sites |
 | `wake_up` | Wake from sleep |
 | `climate_start` / `climate_stop` / `set_temps` | Needs command proxy |
@@ -20,6 +20,8 @@ Hermes server name: `tesla-fleet`. Tools appear as `mcp__tesla_fleet__*`.
 | `door_lock` / `door_unlock` | Needs command proxy |
 
 Do **not** poll `vehicle_data`. Tesla bills per call. Check `vehicle_get` first.
+
+A comma-separated `endpoints` query returns **metadata only** (no `charge_state`). This server rewrites commas to `;`.
 
 ## Requirements
 
