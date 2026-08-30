@@ -1,10 +1,25 @@
 # tesla-fleet-mcp
 
-Minimal **stdio MCP** for Tesla [Fleet API](https://developer.tesla.com/docs/fleet-api). TypeScript. One process, env-based secrets, no extra daemons for read/wake.
+Tesla [Fleet API](https://developer.tesla.com/docs/fleet-api) MCP. TypeScript.
+
+- **stdio** — local Cursor / Hermes (`run.sh`)
+- **Streamable HTTP** — Grok Bot, Cursor Cloud, Grok Build plugin in [`tesla/`](tesla/)
 
 Commands (climate, charge, lock) need Tesla’s official [`tesla-http-proxy`](https://github.com/teslamotors/vehicle-command) plus a virtual key on the car. That proxy is **not** bundled here.
 
-Hermes server name: `tesla-fleet`. Tools appear as `mcp__tesla_fleet__*`.
+Plugin and MCP server name: `tesla`.
+
+## Plugin (Cursor / Grok Bot / Grok Build)
+
+Install and connect **tesla** — do not add a second Tesla MCP entry.
+
+- **Cursor:** Marketplace → tesla, then **Settings → Tools & MCP → Connect** `tesla`
+- **Grok Bot:** Plugins → connect `tesla`
+- **Grok Build:** `/plugin` or `grok plugin install tesla`
+
+Set plugin variable `TESLA_MCP_TOKEN` (HTTP gate). Tesla Fleet / Tessie tokens stay in server env, never in plugin files.
+
+Details: [`tesla/README.md`](tesla/README.md).
 
 ## Tools
 
@@ -47,8 +62,12 @@ Copy `env.example` and point `TESLA_CACHE_PATH` at a `0600` file outside git.
 | `TESLA_VIN` | no | Default vehicle if tools omit `vin` |
 | `TESLA_COMMAND_BASE` | no | Proxy origin, e.g. `https://127.0.0.1:4443` |
 | `NODE_EXTRA_CA_CERTS` | no | Proxy TLS CA if you use a self-signed localhost cert |
+| `TESLA_MCP_TOKEN` | HTTP | Bearer gate for Streamable HTTP. **Not** a Fleet/Tessie token |
+| `TESLA_MCP_HOST` | HTTP | Bind address (default `0.0.0.0`) |
+| `TESLA_MCP_PORT` | HTTP | Bind port (default `8787`) |
+| `MCP_TRANSPORT` | HTTP | Set `http` to start Streamable HTTP instead of stdio |
 
-Never commit secrets. Never paste refresh tokens or client secrets into chat.
+Never commit secrets. Never paste refresh tokens, client secrets, VIN, or `TESLA_MCP_TOKEN` into chat.
 
 ## Setup (once)
 
@@ -93,12 +112,23 @@ npm run login -- "https://your.domain/callback?code=...."
 
 The callback host only needs to accept the browser hit; this CLI reads the URL you paste. A blank page is fine.
 
-## Hermes
+## Start
+
+stdio (local Cursor / Hermes):
 
 ```bash
-# example wrapper: source your env file, then tsx
-hermes mcp add tesla-fleet --command /path/to/tesla-fleet-mcp/run.sh
+./run.sh
 ```
+
+Streamable HTTP (Grok Bot). Public URL in `tesla/mcp.json` must be HTTPS (host or Cloudflare Tunnel — not localhost):
+
+```bash
+export TESLA_MCP_TOKEN  # long random secret; same value as the plugin variable
+MCP_TRANSPORT=http npm run start:http
+# cloudflared tunnel --url http://127.0.0.1:8787
+```
+
+Hermes stdio wrapper: `hermes mcp add tesla-fleet --command /path/to/tesla-fleet-mcp/run.sh`
 
 `run.sh` sources `.env` in the repo directory **or** `$TESLA_ENV` if set. Restart the Hermes process/gateway after adding. Enable/disable tools in the client (`tools.include` / `exclude`), not with extra server flags.
 

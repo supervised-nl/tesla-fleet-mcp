@@ -1,0 +1,32 @@
+{
+  "name": "tesla",
+  "displayName": "Tesla",
+  "version": "0.2.0",
+  "description": "Connect Cursor, Grok Bot, and Grok Build to a Tesla Fleet MCP over Streamable HTTP. Skills for status reads and confirmed vehicle commands.",
+  "author": {
+    "name": "Supervised",
+    "email": "info@supervised.nl"
+  },
+  "homepage": "https://github.com/supervised-nl/tesla-fleet-mcp",
+  "repository": "https://github.com/supervised-nl/tesla-fleet-mcp",
+  "license": "MIT",
+  "keywords": [
+    "tesla",
+    "fleet",
+    "vehicle",
+    "mcp",
+    "charge",
+    "climate"
+  ],
+  "variables": {
+    "type": "object",
+    "properties": {
+      "TESLA_MCP_TOKEN": {
+        "type": "string",
+        "title": "Tesla MCP token",
+        "description": "Bearer token sent as Authorization on the HTTP MCP. Not a Tesla Fleet or Tessie token."
+      }
+    },
+    "required": ["TESLA_MCP_TOKEN"]
+  }
+}
