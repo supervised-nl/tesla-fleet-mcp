@@ -19,6 +19,8 @@ The MCP is Streamable HTTP. Grok Bot does not accept stdio or localhost. Tesla F
 3. Set `TESLA_MCP_URL` and `TESLA_MCP_TOKEN`.
 4. Confirm one `tesla` server.
 
+Do not add a second Tesla MCP entry.
+
 ## Grok Build
 
 ```text
@@ -31,7 +33,7 @@ or
 grok plugin install tesla
 ```
 
-Then connect `tesla`. Skills load from `skills/`. MCP config is `.mcp.json` (identical to `mcp.json`).
+Manifest: `.grok-plugin/plugin.json`. MCP config: `.mcp.json` (identical to `mcp.json`). Then connect `tesla`. Skills load from `skills/`.
 
 ## Skills
 
@@ -40,8 +42,6 @@ Then connect `tesla`. Skills load from `skills/`. MCP config is `.mcp.json` (ide
 | `tesla` | Bootstrap, routing, safety |
 | `tesla-status` | List, battery, location, charge state — no wake |
 | `tesla-command` | Lock / climate / charge / wake after explicit confirmation |
-
-Do not add a second Tesla MCP server.
 
 ## Host
 
