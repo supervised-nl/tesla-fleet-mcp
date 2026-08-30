@@ -1,12 +1,15 @@
 {
   "name": "tesla",
   "version": "0.2.0",
-  "description": "Connect Grok Build to a self-hosted Tesla Fleet MCP over Streamable HTTP. Skills for status reads and confirmed vehicle commands.",
+  "description": "Tesla Fleet MCP for Grok Build and Grok Bot. Streamable HTTP connector plus skills for status reads and confirmed vehicle commands.",
   "repository": "https://github.com/supervised-nl/tesla-fleet-mcp",
   "homepage": "https://github.com/supervised-nl/tesla-fleet-mcp",
   "license": "MIT",
   "keywords": [
     "tesla",
+    "grok",
+    "grok-bot",
+    "grok-build",
     "fleet",
     "vehicle",
     "mcp",

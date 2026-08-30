@@ -1,23 +1,50 @@
 # tesla-fleet-mcp
 
-Tesla [Fleet API](https://developer.tesla.com/docs/fleet-api) MCP. TypeScript.
+Tesla [Fleet API](https://developer.tesla.com/docs/fleet-api) MCP for **Grok Bot**, **Grok Build**, and Cursor.
 
-- **stdio** — local Cursor / Hermes (`run.sh`)
-- **Streamable HTTP** — Grok Bot, Cursor Cloud, Grok Build plugin in [`tesla/`](tesla/)
+Grok does not accept stdio or localhost. Host this server over **Streamable HTTP** on a public HTTPS URL, then connect the `tesla` plugin.
 
-Commands (climate, charge, lock) need Tesla’s official [`tesla-http-proxy`](https://github.com/teslamotors/vehicle-command) plus a virtual key on the car. That proxy is **not** bundled here.
+- **Grok Bot / Grok Build / Cursor Cloud** — Streamable HTTP (`npm run start:http`) + plugin in [`tesla/`](tesla/)
+- **Local Cursor / Hermes** — stdio (`./run.sh`)
 
 Plugin and MCP server name: `tesla`.
 
-## Plugin (Cursor / Grok Bot / Grok Build)
+Commands (climate, charge, lock) need Tesla’s official [`tesla-http-proxy`](https://github.com/teslamotors/vehicle-command) plus a virtual key on the car. That proxy is **not** bundled here.
 
-Install and connect **tesla** — do not add a second Tesla MCP entry.
+## Grok Bot
 
-- **Cursor:** Marketplace → tesla, then **Settings → Tools & MCP → Connect** `tesla`
-- **Grok Bot:** Plugins → connect `tesla`
-- **Grok Build:** `/plugin` or `grok plugin install tesla`
+1. Run Streamable HTTP and expose `/mcp` on public HTTPS (your host or Cloudflare Tunnel).
+2. In Grok Bot: **Plugins → connect `tesla`**.
+3. Set `TESLA_MCP_URL` (`https://…/mcp`) and `TESLA_MCP_TOKEN` (same value as the server `TESLA_MCP_TOKEN`).
 
-Set plugin variables `TESLA_MCP_URL` (your public `https://…/mcp`) and `TESLA_MCP_TOKEN` (HTTP gate). Tesla Fleet / Tessie tokens stay in server env, never in plugin files.
+Fallback if the plugin is not in the marketplace yet:
+
+| Field | Value |
+| --- | --- |
+| Name | `tesla` |
+| Type | `http` |
+| URL | your public `https://…/mcp` |
+| Header | `Authorization: Bearer <TESLA_MCP_TOKEN>` |
+
+Do not add a second Tesla MCP entry. Tesla Fleet / Tessie tokens stay in server env, never in Grok.
+
+## Grok Build
+
+```text
+/plugin
+```
+
+or
+
+```bash
+grok plugin install tesla
+```
+
+Then connect `tesla`. Manifest: [`tesla/.grok-plugin/plugin.json`](tesla/.grok-plugin/plugin.json). MCP: [`tesla/.mcp.json`](tesla/.mcp.json).
+
+## Cursor
+
+Install **tesla** from the [Cursor Marketplace](https://cursor.com/marketplace) (or open [`tesla/`](tesla/)), then **Settings → Tools & MCP → Connect** `tesla`. Same two variables as Grok.
 
 Details: [`tesla/README.md`](tesla/README.md).
 
@@ -114,18 +141,18 @@ The callback host only needs to accept the browser hit; this CLI reads the URL y
 
 ## Start
 
-stdio (local Cursor / Hermes):
+Grok Bot / Grok Build (Streamable HTTP). Public URL must be HTTPS — not localhost. Set that origin as `TESLA_MCP_URL`:
+
+```bash
+export TESLA_MCP_TOKEN  # long random secret; same value as the Grok plugin variable
+MCP_TRANSPORT=http npm run start:http
+# cloudflared tunnel --url http://127.0.0.1:8787
+```
+
+Local Cursor / Hermes (stdio):
 
 ```bash
 ./run.sh
-```
-
-Streamable HTTP (Grok Bot). Public URL must be HTTPS (your host or Cloudflare Tunnel — not localhost). Set that origin as plugin variable `TESLA_MCP_URL`:
-
-```bash
-export TESLA_MCP_TOKEN  # long random secret; same value as the plugin variable
-MCP_TRANSPORT=http npm run start:http
-# cloudflared tunnel --url http://127.0.0.1:8787
 ```
 
 Hermes stdio wrapper: `hermes mcp add tesla-fleet --command /path/to/tesla-fleet-mcp/run.sh`

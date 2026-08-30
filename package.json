@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Tesla Fleet MCP: stdio for local Cursor, Streamable HTTP plugin for Grok Bot / Grok Build.",
+  "description": "Tesla Fleet MCP for Grok Bot, Grok Build, and Cursor. Streamable HTTP plugin plus local stdio.",
   "bin": {
     "tesla-fleet": "./src/index.ts",
     "tesla-fleet-login": "./src/login.ts"

@@ -1,23 +1,24 @@
 # Tesla
 
-Plugin for Cursor, Grok Bot, and Grok Build: **MCP connector** `tesla` plus skills for vehicle status and confirmed commands.
+Works with **Grok Bot**, **Grok Build**, and Cursor. MCP connector `tesla` plus skills for vehicle status and confirmed commands.
 
-The MCP is Streamable HTTP. Grok Bot does not accept stdio or localhost. Tesla Fleet / Tessie tokens stay in the **server** environment. This plugin only declares `TESLA_MCP_URL` and `TESLA_MCP_TOKEN` (your public origin + HTTP gate).
-
-## Cursor
-
-1. Install **tesla** from the [Cursor Marketplace](https://cursor.com/marketplace), or open this `tesla/` folder as a plugin.
-2. Reload if Cursor asks.
-3. **Settings → Tools & MCP** → Connect `tesla`.
-4. Set `TESLA_MCP_URL` (public `https://…/mcp`) and `TESLA_MCP_TOKEN` when prompted.
-5. Confirm a single server named `tesla`.
+Grok Bot needs Streamable HTTP on a public HTTPS URL (no stdio, no localhost). Tesla Fleet / Tessie tokens stay in the **server** environment. This plugin only declares `TESLA_MCP_URL` and `TESLA_MCP_TOKEN`.
 
 ## Grok Bot
 
-1. Install the same Cursor Marketplace plugin **tesla**.
+1. Host the MCP (`MCP_TRANSPORT=http npm run start:http`) with public HTTPS on `/mcp`.
 2. **Plugins → connect tesla**.
 3. Set `TESLA_MCP_URL` and `TESLA_MCP_TOKEN`.
-4. Confirm one `tesla` server.
+4. Confirm one server named `tesla`.
+
+Fallback (no marketplace listing):
+
+| Field | Value |
+| --- | --- |
+| Name | `tesla` |
+| Type | `http` |
+| URL | your public `https://…/mcp` |
+| Header | `Authorization: Bearer <TESLA_MCP_TOKEN>` |
 
 Do not add a second Tesla MCP entry.
 
@@ -33,7 +34,15 @@ or
 grok plugin install tesla
 ```
 
-Manifest: `.grok-plugin/plugin.json`. MCP config: `.mcp.json` (identical to `mcp.json`). Then connect `tesla`. Skills load from `skills/`.
+Manifest: `.grok-plugin/plugin.json`. MCP: `.mcp.json` (identical to `mcp.json`). Then connect `tesla`. Skills load from `skills/`.
+
+## Cursor
+
+1. Install **tesla** from the [Cursor Marketplace](https://cursor.com/marketplace), or open this `tesla/` folder as a plugin.
+2. Reload if Cursor asks.
+3. **Settings → Tools & MCP** → Connect `tesla`.
+4. Set `TESLA_MCP_URL` (public `https://…/mcp`) and `TESLA_MCP_TOKEN` when prompted.
+5. Confirm a single server named `tesla`.
 
 ## Skills
 
@@ -45,7 +54,7 @@ Manifest: `.grok-plugin/plugin.json`. MCP config: `.mcp.json` (identical to `mcp
 
 ## Host
 
-Run the Streamable HTTP process from the repo root (stdio still works locally in Cursor via `run.sh`):
+From the repo root:
 
 ```bash
 export TESLA_MCP_TOKEN  # HTTP gate; generate a long random secret
@@ -53,7 +62,9 @@ export MCP_TRANSPORT=http
 npm run start:http
 ```
 
-Point a public HTTPS origin at `/mcp` (Cloudflare Tunnel for Streamable HTTP). Put that origin in plugin variable `TESLA_MCP_URL`. Use ngrok only if you must expose legacy SSE.
+Point a public HTTPS origin at `/mcp` (Cloudflare Tunnel for Streamable HTTP). Put that origin in `TESLA_MCP_URL`. Use ngrok only if you must expose legacy SSE.
+
+stdio still works locally in Cursor via `run.sh`.
 
 ## License
 
