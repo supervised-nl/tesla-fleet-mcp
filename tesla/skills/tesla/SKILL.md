@@ -7,12 +7,12 @@ when-to-use: User talks about their Tesla, charging, climate, lock, location, or
 
 # Tesla
 
-Connect through this plugin's MCP server `tesla` (Streamable HTTP). Tesla Fleet and Tessie tokens stay on the host. The plugin only has `TESLA_MCP_TOKEN` for the HTTP gate.
+Connect through this plugin's MCP server `tesla` (Streamable HTTP). Tesla Fleet and Tessie tokens stay on the host. The plugin only has `TESLA_MCP_URL` (public HTTPS `/mcp`) and `TESLA_MCP_TOKEN` (HTTP gate).
 
 ## Connect
 
 1. **Settings → Tools & MCP** → connect `tesla`.
-2. Set `TESLA_MCP_TOKEN` when the plugin asks. That value must match the host `TESLA_MCP_TOKEN`.
+2. Set `TESLA_MCP_URL` and `TESLA_MCP_TOKEN` when the plugin asks. The token must match the host `TESLA_MCP_TOKEN`.
 3. Confirm a single server named `tesla` is connected.
 4. Do not add a second Tesla MCP server.
 

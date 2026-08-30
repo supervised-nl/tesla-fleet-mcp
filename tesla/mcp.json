@@ -2,7 +2,7 @@
   "mcpServers": {
     "tesla": {
       "type": "http",
-      "url": "https://mcp.supervised.nl/mcp",
+      "url": "${TESLA_MCP_URL}",
       "headers": {
         "Authorization": "Bearer ${TESLA_MCP_TOKEN}"
       }

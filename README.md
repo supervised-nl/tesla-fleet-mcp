@@ -17,7 +17,7 @@ Install and connect **tesla** — do not add a second Tesla MCP entry.
 - **Grok Bot:** Plugins → connect `tesla`
 - **Grok Build:** `/plugin` or `grok plugin install tesla`
 
-Set plugin variable `TESLA_MCP_TOKEN` (HTTP gate). Tesla Fleet / Tessie tokens stay in server env, never in plugin files.
+Set plugin variables `TESLA_MCP_URL` (your public `https://…/mcp`) and `TESLA_MCP_TOKEN` (HTTP gate). Tesla Fleet / Tessie tokens stay in server env, never in plugin files.
 
 Details: [`tesla/README.md`](tesla/README.md).
 
@@ -120,7 +120,7 @@ stdio (local Cursor / Hermes):
 ./run.sh
 ```
 
-Streamable HTTP (Grok Bot). Public URL in `tesla/mcp.json` must be HTTPS (host or Cloudflare Tunnel — not localhost):
+Streamable HTTP (Grok Bot). Public URL must be HTTPS (your host or Cloudflare Tunnel — not localhost). Set that origin as plugin variable `TESLA_MCP_URL`:
 
 ```bash
 export TESLA_MCP_TOKEN  # long random secret; same value as the plugin variable
