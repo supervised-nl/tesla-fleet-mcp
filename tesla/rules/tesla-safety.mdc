@@ -1,0 +1,14 @@
+---
+description: Never log Tesla VIN or tokens. Confirm before lock, climate, charge, or wake.
+alwaysApply: true
+---
+
+# Tesla safety
+
+- Never print VIN, Tesla Fleet tokens, Tessie tokens, refresh tokens, client secrets, or `TESLA_MCP_TOKEN` in chat or logs.
+- Refer to the vehicle by display name or model, not VIN.
+- Use the plugin MCP server `tesla`. Do not add a second Tesla MCP server.
+- Reads: `vehicles_list`, `vehicle_get`, `vehicle_data`, `nearby_chargers`. Prefer `vehicle_get`. Do not wake the car for status unless the user asked.
+- Writes: `door_lock`, `door_unlock`, `climate_start`, `climate_stop`, `set_temps`, `charge_start`, `charge_stop`, `set_charge_limit`, `wake_up`. Ask the user to confirm the action first. Do not skip the question.
+- Do not poll `vehicle_data`. Tesla bills per call.
+---

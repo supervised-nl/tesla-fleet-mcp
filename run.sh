@@ -10,4 +10,7 @@ elif [[ -f .env ]]; then
   source .env
 fi
 set +a
+if [[ "${MCP_TRANSPORT:-}" == "http" ]] || [[ "${1:-}" == "--http" ]]; then
+  exec ./node_modules/.bin/tsx src/index.ts --http
+fi
 exec ./node_modules/.bin/tsx src/index.ts

@@ -1,15 +1,16 @@
 {
   "name": "tesla-fleet-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Minimal stdio MCP server for Tesla Fleet API.",
+  "description": "Tesla Fleet MCP: stdio for local Cursor, Streamable HTTP plugin for Grok Bot / Grok Build.",
   "bin": {
     "tesla-fleet": "./src/index.ts",
     "tesla-fleet-login": "./src/login.ts"
   },
   "scripts": {
     "start": "tsx src/index.ts",
+    "start:http": "tsx src/index.ts --http",
     "login": "tsx src/login.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
