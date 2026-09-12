@@ -9,7 +9,7 @@ npm test
 npx tsc --noEmit
 ```
 
-`npm test` is the repo check. It must stay green with `tsc --noEmit`. `EXPECTED_TOOLS` lives in `src/tools.ts` as `TESLA_TOOL_NAMES` and must match `listTools()` on the live server.
+`npm test` is the repo check. It must stay green with `tsc --noEmit`. `TESLA_TOOL_NAMES` in `src/tools.ts` must match `listTools()` on the live server.
 
 ## Safety
 

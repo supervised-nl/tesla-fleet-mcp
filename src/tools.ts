@@ -69,9 +69,3 @@ export const TESLA_TOOLS = [
 export type TeslaToolName = (typeof TESLA_TOOLS)[number]["name"];
 
 export const TESLA_TOOL_NAMES: TeslaToolName[] = TESLA_TOOLS.map((t) => t.name);
-
-export const PROXY_REQUIRED_TOOLS = TESLA_TOOLS.filter((t) => t.needsProxy).map((t) => t.name);
-
-export const EXTRA_CONFIRM_TOOLS = TESLA_TOOLS.filter(
-  (t) => "danger" in t && t.danger === "extra-confirm",
-).map((t) => t.name);

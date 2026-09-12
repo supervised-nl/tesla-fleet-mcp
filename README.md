@@ -231,7 +231,6 @@ Do not publish the proxy to the internet. This repo does not vendor or start tha
 HTTP MCP can run in Compose if you bind **localhost only**. Keep Fleet secrets in an uncommitted `.env`. Do not publish `tesla-http-proxy`. If you add it as a sidecar, give it `network_mode: host` or a shared network, listen on `127.0.0.1:4443`, and omit ports for the proxy service.
 
 ```yaml
-# Example only. Not a full production stack. Proxy is not bundled.
 services:
   tesla-mcp:
     image: node:20-bookworm
