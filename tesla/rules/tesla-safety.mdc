@@ -1,5 +1,5 @@
 ---
-description: Never log Tesla VIN or tokens. Confirm before lock, climate, charge, or wake.
+description: Never log Tesla VIN or tokens. Confirm writes. Extra confirm for unlock, remote start, PIN clears, erase, valet, speed limit, and guest mode.
 alwaysApply: true
 ---
 
@@ -8,7 +8,9 @@ alwaysApply: true
 - Never print VIN, Tesla Fleet tokens, Tessie tokens, refresh tokens, client secrets, or `TESLA_MCP_TOKEN` in chat or logs.
 - Refer to the vehicle by display name or model, not VIN.
 - Use the plugin MCP server `tesla`. Do not add a second Tesla MCP server.
-- Reads: `vehicles_list`, `vehicle_get`, `vehicle_data`, `nearby_chargers`. Prefer `vehicle_get`. Do not wake the car for status unless the user asked.
-- Writes: `door_lock`, `door_unlock`, `climate_start`, `climate_stop`, `set_temps`, `charge_start`, `charge_stop`, `set_charge_limit`, `wake_up`. Ask the user to confirm the action first. Do not skip the question.
+- Reads: `vehicles_list`, `vehicle_get`, `vehicle_data`, `nearby_chargers`, `mobile_enabled`, `recent_alerts`, `service_data`, `release_notes`, `energy_products`, `energy_live_status`, `energy_site_info`. Prefer `vehicle_get`. Do not wake the car for status unless the user asked.
+- Writes need explicit confirmation first. Do not skip the question.
+- Extra confirm (repeat the action, wait for a second clear yes) before: `door_unlock`, `remote_start_drive`, `erase_user_data`, `clear_pin_to_drive_admin`, `reset_pin_to_drive_pin`, `speed_limit_clear_pin`, `speed_limit_clear_pin_admin`, `reset_valet_pin`, `set_valet_mode`, `guest_mode`, `speed_limit_activate`, `speed_limit_deactivate`, `speed_limit_set_limit`.
+- Other writes still need one confirm: climate, charge, lock, honk, flash, trunk, windows, sentry, media, navigation, software update, schedules, `wake_up`.
 - Do not poll `vehicle_data`. Tesla bills per call.
----
+- Command writes need the host `TESLA_COMMAND_BASE` proxy. If the tool errors about a missing proxy, say so.

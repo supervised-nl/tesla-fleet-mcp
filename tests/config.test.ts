@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { vinOrDefault } from "../src/config.ts";
+import { fleetBase, vinOrDefault } from "../src/config.ts";
 import { cap, endpointsQuery, qs } from "../src/util.ts";
 
 describe("cap", () => {
@@ -27,6 +27,20 @@ describe("vinOrDefault", () => {
     delete process.env.TESLA_VIN;
     expect(() => vinOrDefault()).toThrow(/Missing vin/);
     if (prev !== undefined) process.env.TESLA_VIN = prev;
+  });
+});
+
+describe("fleetBase", () => {
+  it("TESLA_FLEET_BASE overrides region default", () => {
+    const prevBase = process.env.TESLA_FLEET_BASE;
+    const prevRegion = process.env.TESLA_REGION;
+    process.env.TESLA_FLEET_BASE = "https://fleet.example.test";
+    process.env.TESLA_REGION = "na";
+    expect(fleetBase()).toBe("https://fleet.example.test");
+    if (prevBase === undefined) delete process.env.TESLA_FLEET_BASE;
+    else process.env.TESLA_FLEET_BASE = prevBase;
+    if (prevRegion === undefined) delete process.env.TESLA_REGION;
+    else process.env.TESLA_REGION = prevRegion;
   });
 });
 

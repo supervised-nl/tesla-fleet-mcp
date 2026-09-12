@@ -49,8 +49,8 @@ Manifest: `.grok-plugin/plugin.json`. MCP: `.mcp.json` (identical to `mcp.json`)
 | Skill | Use when |
 | --- | --- |
 | `tesla` | Bootstrap, routing, safety |
-| `tesla-status` | List, battery, location, charge state — no wake |
-| `tesla-command` | Lock / climate / charge / wake after explicit confirmation |
+| `tesla-status` | List, battery, location, alerts, service, energy. No wake |
+| `tesla-command` | Writes after explicit confirmation. Extra confirm for unlock, remote start, PIN clears, erase, valet, speed limit, guest mode |
 
 ## Host
 
