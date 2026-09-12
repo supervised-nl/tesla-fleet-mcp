@@ -13,6 +13,7 @@ export const SCOPES = [
   "vehicle_cmds",
   "vehicle_charging_cmds",
   "vehicle_location",
+  "energy_device_data",
 ] as const;
 
 export function env(name: string, fallback = ""): string {

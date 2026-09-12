@@ -2,23 +2,9 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { serveHttp } from "../src/http.ts";
+import { TESLA_TOOL_NAMES } from "../src/tools.ts";
 
 const TOKEN = "test-tesla-mcp-token";
-const EXPECTED_TOOLS = [
-  "vehicles_list",
-  "vehicle_get",
-  "vehicle_data",
-  "nearby_chargers",
-  "wake_up",
-  "climate_start",
-  "climate_stop",
-  "set_temps",
-  "charge_start",
-  "charge_stop",
-  "set_charge_limit",
-  "door_lock",
-  "door_unlock",
-];
 
 describe("streamable HTTP", () => {
   let url = "";
@@ -51,7 +37,7 @@ describe("streamable HTTP", () => {
     await client.connect(transport);
     try {
       const listed = await client.listTools();
-      expect(listed.tools.map((t) => t.name)).toEqual(EXPECTED_TOOLS);
+      expect(listed.tools.map((t) => t.name)).toEqual(TESLA_TOOL_NAMES);
 
       const read = await client.callTool({ name: "vehicles_list", arguments: {} });
       expect(read).toMatchObject({ isError: true });
