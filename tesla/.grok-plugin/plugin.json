@@ -1,6 +1,6 @@
 {
   "name": "tesla",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Tesla Fleet MCP for Grok Build and Grok Bot. Streamable HTTP connector plus skills for status reads and confirmed vehicle commands.",
   "repository": "https://github.com/supervised-nl/tesla-fleet-mcp",
   "homepage": "https://github.com/supervised-nl/tesla-fleet-mcp",

@@ -1,8 +1,8 @@
 ---
 name: tesla
 description: >-
-  Tesla Fleet MCP bootstrap. Use when the user mentions Tesla, the car, Model 3/Y/S/X, Cybertruck, VIN, charging, cabin climate, lock/unlock, or vehicle location. Route status reads to tesla-status and lock/climate/charge writes to tesla-command. Trigger even when the user does not name MCP.
-when-to-use: User talks about their Tesla, charging, climate, lock, location, or vehicle status.
+  Tesla Fleet MCP bootstrap. Use when the user mentions Tesla, the car, Model 3/Y/S/X, Cybertruck, VIN, charging, cabin climate, lock/unlock, sentry, media, navigation, software update, valet, guest mode, energy/Powerwall, or vehicle location. Route status reads to tesla-status and writes to tesla-command. Trigger even when the user does not name MCP.
+when-to-use: User talks about their Tesla, charging, climate, lock, location, media, energy site, or vehicle status.
 ---
 
 # Tesla
@@ -20,13 +20,13 @@ Connect through this plugin's MCP server `tesla` (Streamable HTTP). Tesla Fleet 
 
 | Need | Skill | Tools |
 | --- | --- | --- |
-| List, battery, range, location, charge state | `tesla-status` | `vehicles_list`, `vehicle_get`, `vehicle_data`, `nearby_chargers` |
-| Lock, climate, charge, wake | `tesla-command` | `door_lock`, `door_unlock`, `climate_start`, `climate_stop`, `set_temps`, `charge_start`, `charge_stop`, `set_charge_limit`, `wake_up` |
+| List, battery, range, location, charge state, alerts, service, energy | `tesla-status` | `vehicles_list`, `vehicle_get`, `vehicle_data`, `nearby_chargers`, `mobile_enabled`, `recent_alerts`, `service_data`, `release_notes`, `energy_products`, `energy_live_status`, `energy_site_info` |
+| Lock, climate, charge, media, nav, sentry, schedules, wake | `tesla-command` | See that skill. Confirm first. |
+| Unlock, remote start, PIN clears, erase, valet, speed limit, guest mode | `tesla-command` | Extra confirm. See the danger list in that skill. |
 
 ## Safety
 
 - Never print VIN, refresh tokens, client secrets, or `TESLA_MCP_TOKEN` in chat.
 - Prefer `vehicle_get` before `vehicle_data`. Do not poll `vehicle_data`.
 - Do not call `wake_up` for a status question unless the user asked to wake the car.
-- Writes (lock/climate/charge/wake) only after explicit user confirmation.
----
+- Writes only after explicit user confirmation. Extra confirm for unlock, remote start, PIN clears, erase, valet, speed limit, and guest mode.
